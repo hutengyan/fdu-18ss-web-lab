@@ -126,6 +126,28 @@
             <th>Amount</th>
          </tr>
 
+
+          <script>
+              var file=["<img class=img-thumbnail src=images/art/tiny/116010.jpg>","<img class=img-thumbnail src=images/art/tiny/113010.jpg>"];
+              var product=['Artist Holding a Thistle','Self-portrait in a Straw Hat'];
+              var quantity=[2,1];
+              var price=[500,700];
+              for(var i=0;i<file.length;i++){
+                  var html="<tr>";
+                  html+="<td>"+file[i]+"</td>";
+                  html+="<td>"+product[i]+"</td>";
+                  html+="<td>"+quantity[i]+"</td>";
+                  html+="<td>"+"$"+price[i]+"</td>";
+                  html+="<td>"+"$"+quantity[i]*price[i]+"</td>";
+                  html+="</tr>";
+                  document.write(html);
+              }
+
+          </script>
+
+
+
+
          <!-- 这是你需要修改的地方 -->
          <!-- 本来是下面这样👇 -->
 
@@ -160,25 +182,26 @@
 
          <tr class="success strong">
             <td colspan="4" class="moveRight">Subtotal</td>
-            <td >$1700</td>
+            <td id="subtotal">$1700</td>
          </tr>
          <tr class="active strong">
             <td colspan="4" class="moveRight">Tax</td>
-            <td>$170</td>
+            <td id="tax">$170</td>
          </tr>  
          <tr class="strong">
             <td colspan="4" class="moveRight">Shipping</td>
-            <td>$100</td>
+            <td id="shipping">$100</td>
          </tr> 
          <tr class="warning strong text-danger">
             <td colspan="4" class="moveRight">Grand Total</td>
-            <td>$1970</td>
+            <td id="grand-total">$1970</td>
          </tr>    
          <tr >
             <td colspan="4" class="moveRight"><button type="button" class="btn btn-primary" >Continue Shopping</button></td>
             <td><button type="button" class="btn btn-success" >Checkout</button></td>
          </tr>
-      </table>         
+      </table>
+
 
 </div>  <!-- end container -->
 
@@ -259,6 +282,24 @@
       </div>
    </div>
 </footer>
+
+<script>
+    var quantity=[2,1];
+    var price=[500,700];
+    var subtotal=0;
+    for(var i=0;i<file.length;i++){
+        subtotal+=quantity[i]*price[i];
+    }
+    document.getElementById("subtotal").innerText="$"+subtotal;
+    document.getElementById("tax").innerText="$"+subtotal*0.1;
+    var shipping=0;
+    if(subtotal>=1000)
+        shipping=0;
+    else
+        shipping=40;
+    document.getElementById("shipping").innerText="$"+shipping;
+    document.getElementById("grand-total").innerText="&"+(subtotal+subtotal*0.1+shipping);
+</script>
 
 
     <!-- Bootstrap core JavaScript
