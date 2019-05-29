@@ -3,7 +3,6 @@ include 'travel-data.inc.php';
 
 
 
-
 ?>
 
 <!DOCTYPE html>
@@ -37,13 +36,16 @@ include 'travel-data.inc.php';
         <div class="btn-group countryButtons" role="group" aria-label="...">
               <a role="button" class="btn btn-default" href="list.php">All</a>
            
-              <?php   
+              <?php   include 'travel-data.inc.php';
               /* you will need to fill this place with appropriate PHP */
               /* hint: use array and loop */
               //the next line is an example
-              //<a href="list.php?country=Canada" role="button" class="btn btn-default"> Canada</a> 
-
-
+              //<a href="list.php?country=Canada" role="button" class="btn btn-default"> Canada</a>
+              $index=array("CA","DE","GR","IT","GB","US");
+              for($number=0;$number<count($index);$number++){
+                  $mark=$index[$number];
+                  echo "<a href=\"list.php?country='$countries[$mark]'\" role=\"button\" class=\"btn btn-default\">$countries[$mark]</a>";
+              }
               ?>
                      
         </div>               
@@ -57,25 +59,40 @@ include 'travel-data.inc.php';
           /* hint: use array and loop */
           //the next lines are one of the elements
           //you need to fill the elements with data provided
+//           <li>
+//                 <a href="detail.php?id=22" class="img-responsive">
+//                 	<img src="images/square/6114850721.jpg" alt="View of Cologne">
+//                 	<div class="caption">
+//                 		<div class="blur">
+//                 		</div>
+//                 		<div class="caption-text">
+//                 			<h1>View of Cologne</h1>
+//                 		</div>
+//                 	</div>
+//                 </a>
+//			 </li>
+          $picture=array(22,54,7,19,46,6,60,58,75,77,27,2,24,13,101,102);
+          for($number=0;$number<count($picture);$number++){
+              $mark=$picture[$number];
+              echo "<li>";
+              echo   "<a href=\"detail.php?id={$images[$mark]['id']}\" class=\"img-responsive\">";
+              echo   	"<img src=\"images/square/{$images[$mark]['path']}\" alt=\"{$images[$mark]['title']}\">";
+              echo   	"<div class=\"caption\">";
+              echo   		"<div class=\"blur\">";
+              echo   		"</div>";
+              echo   		"<div class=\"caption-text\">";
+              echo   			"<h1>{$images[$mark]['title']}</h1>";
+              echo   		"</div>";
+              echo   	"</div>";
+              echo   "</a>";
+			  echo "</li>";
+          }
 
 
-   //        <li>
-   //              <a href="detail.php?id=22" class="img-responsive">
-   //              	<img src="images/square/6114850721.jpg" alt="View of Cologne">
-   //              	<div class="caption">
-   //              		<div class="blur">
-   //              		</div>
-   //              		<div class="caption-text">
-   //              			<h1>View of Cologne</h1>
-   //              		</div>
-   //              	</div>
-   //              </a>
-			// </li>
           ?>
 
-       </ul>       
+       </ul>
 
-      
     </main>
     
     <footer>
