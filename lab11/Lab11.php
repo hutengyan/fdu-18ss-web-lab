@@ -4,6 +4,10 @@
 //****** Hint ******
 //connect database and fetch data here
 
+$conn = mysqli_connect('localhost','root','HTY37378985','travel');
+if(!$conn){
+    echo 'Connection error:' . mysqli_connect_error();
+}
 
 ?>
 
@@ -47,6 +51,9 @@
                 //****** Hint ******
                 //display the list of continents
 
+                $sql = 'SELECT * FROM continents ';
+                $result = mysqli_query($conn,$sql);
+
                 while($row = $result->fetch_assoc()) {
                   echo '<option value=' . $row['ContinentCode'] . '>' . $row['ContinentName'] . '</option>';
                 }
@@ -60,7 +67,15 @@
                 //Fill this place
 
                 //****** Hint ******
-                /* display list of countries */ 
+                /* display list of countries */
+
+                $sql = 'SELECT * FROM countries ';
+                $result = mysqli_query($conn,$sql);
+
+                while($row = $result->fetch_assoc()) {
+                    echo '<option value=' . $row['ISO'] . '>' . $row['CountryName'] . '</option>';
+                }
+
                 ?>
               </select>    
               <input type="text"  placeholder="Search title" class="form-control" name=title>
@@ -77,19 +92,40 @@
             //Fill this place
 
             //****** Hint ******
-            /* use while loop to display images that meet requirements ... sample below ... replace ???? with field data
-            <li>
-              <a href="detail.php?id=????" class="img-responsive">
-                <img src="images/square-medium/????" alt="????">
-                <div class="caption">
-                  <div class="blur"></div>
-                  <div class="caption-text">
-                    <p>????</p>
-                  </div>
-                </div>
-              </a>
-            </li>        
-            */ 
+             //use while loop to display images that meet requirements ... sample below ... replace ???? with field data
+
+            $continent= isset($_GET["continent"])? $_GET["continent"] :'';
+            $country=isset($_GET["country"])? $_GET["country"] :'';
+
+            if($continent && $country){
+                $sql = "SELECT * FROM imagedetails WHERE ContinentCode='$continent'and CountryCodeISO='$country'";
+            }
+            elseif($continent || $country){
+                $sql = "SELECT * FROM imagedetails WHERE ContinentCode='$continent'or CountryCodeISO='$country'";
+            }
+            else{
+                $sql = "SELECT * FROM imagedetails ";
+            }
+
+            $result = mysqli_query($conn,$sql);
+
+            while($row = $result->fetch_assoc()){
+                echo '<li>';
+                echo  '<a href="detail.php?id=' . $row['ImageID'] . '" class=\"img-responsive">';
+                echo    '<img src="images/square-medium/' . $row['Path'] .  '" alt=' . $row['Title'] . '">';
+                echo    '<div class="caption">';
+                echo      '<div class="blur"></div>';
+                echo      '<div class="caption-text">';
+                echo        '<p>' . $row['Title'] . '</p>';
+                echo      '</div>';
+                echo    '</div>';
+                echo  '</a>';
+                echo '</li>';
+            }
+
+
+
+
             ?>
        </ul>       
 
